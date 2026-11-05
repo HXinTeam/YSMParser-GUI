@@ -15,8 +15,8 @@
 #   Deploy command = npx wrangler deploy
 # ============================================================
 
-# Worker 名
-name = "ysmparser-gui"
+# Worker 名（必须和 Cloudflare 上已有的 Worker 项目名一致）
+name = "ysmparser"
 
 # 运行时兼容日期
 compatibility_date = "2026-11-05"

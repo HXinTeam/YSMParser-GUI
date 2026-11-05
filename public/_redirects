@@ -1,2 +1,0 @@
-# SPA fallback — Cloudflare serves real files first, this only catches deep links.
-/* /index.html 200

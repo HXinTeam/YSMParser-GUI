@@ -1,11 +1,7 @@
-# Cloudflare Pages — static asset rules
-# The parser binary never changes under a given path, so it can be cached hard.
+# Cloudflare 静态资源规则（Workers 原生解析 _headers）
+# 解析器二进制路径固定，内容不变，可以缓存很久。
 /wasm/*
   Cache-Control: public, max-age=31536000, immutable
 
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
-
-# Needed for WebAssembly.instantiateStreaming (falls back to arrayBuffer otherwise).
-/*.wasm
-  Content-Type: application/wasm
