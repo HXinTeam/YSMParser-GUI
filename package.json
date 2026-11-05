@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:wasm": "node scripts/sync-wasm.mjs",
+    "deploy:pages": "npx wrangler pages deploy",
+    "preview:pages": "npx wrangler pages dev out"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.5",

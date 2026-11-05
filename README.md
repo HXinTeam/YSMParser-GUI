@@ -39,6 +39,13 @@ npm run build      # 静态导出 → out/
 或者用 Wrangler CLI（仓库里的 `wrangler.toml` 已写好 `pages_build_output_dir = "out"`）：
 
 ```bash
+npm run deploy:pages      # 等价于 npx wrangler pages deploy
+npm run preview:pages     # 用 Pages 运行时本地预览 out/
+```
+
+也可以显式指定：
+
+```bash
 npx wrangler pages deploy out --project-name ysmparser-gui
 ```
 

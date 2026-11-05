@@ -1,3 +1,37 @@
+# ============================================================
+# Cloudflare Pages 配置
+#
+# 本项目是纯静态站点（next.config.ts 里 output: "export"）：
+# 没有 Worker、没有 API 路由，产物就是一个 out/ 目录，Pages 只负责发文件。
+#
+# 常用命令：
+#   npm run build                 # next build → out/
+#   npm run deploy:pages          # 上传 out/（用下面的 pages_build_output_dir）
+#   npm run preview:pages         # 本地用 Pages 运行时预览 out/
+#
+# 用 Git 集成时，Dashboard 对应填：
+#   Framework preset       = None
+#   Build command          = npm run build
+#   Build output directory = out
+# ============================================================
+
+# Pages 项目名（对应 dashboard 里的 project name）
 name = "ysmparser-gui"
+
+# 运行时兼容日期
 compatibility_date = "2026-11-05"
+
+# 静态产物目录 —— next build 的导出结果在这里
 pages_build_output_dir = "out"
+
+# 不覆盖 Dashboard 上配置的变量
+keep_vars = true
+
+# 构建命令
+[build]
+command = "npm run build"
+cwd = "."
+
+# 环境变量（构建期与运行时都可用）
+[vars]
+# NEXT_PUBLIC_EXAMPLE = ""
