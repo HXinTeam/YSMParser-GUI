@@ -1,0 +1,11 @@
+# Cloudflare Pages — static asset rules
+# The parser binary never changes under a given path, so it can be cached hard.
+/wasm/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Needed for WebAssembly.instantiateStreaming (falls back to arrayBuffer otherwise).
+/*.wasm
+  Content-Type: application/wasm
