@@ -1,37 +1,37 @@
 # ============================================================
-# Cloudflare Pages 配置
+# Cloudflare Workers —— 纯静态资源（没有 Worker 脚本，只发 out/ 里的文件）
 #
-# 本项目是纯静态站点（next.config.ts 里 output: "export"）：
-# 没有 Worker、没有 API 路由，产物就是一个 out/ 目录，Pages 只负责发文件。
+# 为什么是 Workers 而不是 Pages：
+# 仓库根目录存在 wrangler.toml 时，Cloudflare 的构建系统就按 Workers 处理，
+# 部署命令是 `npx wrangler deploy`；Pages 那套「上传 build 输出目录」反而用不上。
+# 官方迁移指南也是 pages_build_output_dir → assets.directory。
 #
-# 常用命令：
-#   npm run build                 # next build → out/
-#   npm run deploy:pages          # 上传 out/（用下面的 pages_build_output_dir）
-#   npm run preview:pages         # 本地用 Pages 运行时预览 out/
+#   npm run build      # next build（output: "export"）→ out/
+#   npm run deploy     # npx wrangler deploy（上传 out/）
+#   npm run preview    # npx wrangler dev（本地起 Worker 看静态资源）
 #
-# 用 Git 集成时，Dashboard 对应填：
-#   Framework preset       = None
-#   Build command          = npm run build
-#   Build output directory = out
+# Dashboard（Build settings）：
+#   Build command  = npm run build
+#   Deploy command = npx wrangler deploy
 # ============================================================
 
-# Pages 项目名（对应 dashboard 里的 project name）
+# Worker 名
 name = "ysmparser-gui"
 
 # 运行时兼容日期
 compatibility_date = "2026-11-05"
 
-# 静态产物目录 —— next build 的导出结果在这里
-pages_build_output_dir = "out"
-
 # 不覆盖 Dashboard 上配置的变量
 keep_vars = true
 
-# 构建命令
-[build]
-command = "npm run build"
-cwd = "."
+# 静态资源目录 —— next build 的导出结果
+[assets]
+directory = "./out"
+# Next 导出的是 index.html / 404.html
+html_handling = "auto-trailing-slash"
+# 找不到的路径回落到 Next 生成的 404.html
+not_found_handling = "404-page"
 
-# 环境变量（构建期与运行时都可用）
+# 环境变量
 [vars]
 # NEXT_PUBLIC_EXAMPLE = ""

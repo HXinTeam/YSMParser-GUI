@@ -25,28 +25,36 @@ npm run build      # 静态导出 → out/
 
 `out/` 就是全部产物（HTML / JS / CSS / WASM），没有任何服务端依赖。
 
-## 部署到 Cloudflare Pages
+## 部署到 Cloudflare
+
+仓库根目录有 `wrangler.toml`，所以 Cloudflare 的构建系统按 **Workers 静态资源** 处理 ——
+没有 Worker 脚本，只有 `out/` 里的静态文件（官方迁移指南就是这么走的：`pages_build_output_dir` → `assets.directory`）。
 
 控制台（Git 集成）：
 
 | 配置项 | 值 |
 | --- | --- |
-| Framework preset | None |
 | Build command | `npm run build` |
-| Build output directory | `out` |
+| Deploy command | `npx wrangler deploy` |
 | Node.js version | `22`（最低 `20.19`） |
 
-或者用 Wrangler CLI（仓库里的 `wrangler.toml` 已写好 `pages_build_output_dir = "out"`）：
+`wrangler.toml` 指路：
 
-```bash
-npm run deploy:pages      # 等价于 npx wrangler pages deploy
-npm run preview:pages     # 用 Pages 运行时本地预览 out/
+```toml
+[assets]
+directory = "./out"
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
 ```
 
-也可以显式指定：
+`public/_headers`、`public/_redirects` 会被 Workers 原生解析（缓存规则、SPA 回退），不用另外配。
+
+命令行部署：
 
 ```bash
-npx wrangler pages deploy out --project-name ysmparser-gui
+npm run build
+npm run deploy      # npx wrangler deploy
+npm run preview     # npx wrangler dev，本地起 Worker 看 out/
 ```
 
 ## WASM 运行时

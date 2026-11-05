@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "sync:wasm": "node scripts/sync-wasm.mjs",
-    "deploy:pages": "npx wrangler pages deploy",
-    "preview:pages": "npx wrangler pages dev out"
+    "deploy": "npx wrangler deploy",
+    "preview": "npx wrangler dev"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.5",
